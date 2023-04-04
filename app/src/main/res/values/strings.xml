@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">ListViewVSRecyclerView</string>
+    <string name="listview">ListView</string>
+    <string name="recyclerview">RecyclerView</string>
+</resources>
