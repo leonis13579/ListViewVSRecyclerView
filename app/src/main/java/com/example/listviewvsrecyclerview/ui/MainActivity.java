@@ -17,13 +17,5 @@ public class MainActivity extends AppCompatActivity {
         mBinding = ActivityMainBinding.inflate(getLayoutInflater());
 
         setContentView(mBinding.getRoot());
-
-        mBinding.listViewBtn.setOnClickListener((view) -> {
-            getSupportFragmentManager().beginTransaction().replace(mBinding.container.getId(), new ListViewFragment()).commit();
-        });
-
-        mBinding.recyclerViewBtn.setOnClickListener((view) -> {
-            getSupportFragmentManager().beginTransaction().replace(mBinding.container.getId(), new RecyclerViewFragment()).commit();
-        });
     }
 }

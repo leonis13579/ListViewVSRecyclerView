@@ -21,6 +21,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         this.data = new ArrayList<>();
     }
 
+
+    public RecyclerViewAdapter(List<Item> data) {
+        this.data = data;
+    }
+
     public void updateData(List<Item> newData) {
         data = newData;
 

@@ -12,6 +12,8 @@ import androidx.annotation.Nullable;
 
 import com.example.listviewvsrecyclerview.data.models.Item;
 
+import java.util.List;
+
 public class ListViewAdapter extends ArrayAdapter<Item> {
 
 

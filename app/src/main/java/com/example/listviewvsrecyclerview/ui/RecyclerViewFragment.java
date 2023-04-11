@@ -8,17 +8,20 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.listviewvsrecyclerview.data.models.Item;
 import com.example.listviewvsrecyclerview.data.repositories.ItemsRepository;
 import com.example.listviewvsrecyclerview.databinding.RecyclerViewFragmentBinding;
 import com.example.listviewvsrecyclerview.ui.adapters.RecyclerViewAdapter;
+import com.example.listviewvsrecyclerview.ui.view_models.RecyclerViewModel;
 
 import java.util.List;
 
 public class RecyclerViewFragment extends Fragment {
     RecyclerViewFragmentBinding mBinding;
+    RecyclerViewModel mViewModel;
 
     @Nullable
     @Override
@@ -30,20 +33,17 @@ public class RecyclerViewFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        mViewModel = new ViewModelProvider(this).get(RecyclerViewModel.class);
+
         mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mBinding.recyclerView.setAdapter(new RecyclerViewAdapter());
 
-        new Thread(() -> {
+        mBinding.addItem.setOnClickListener((v) -> {
+            mViewModel.addItem();
+        });
 
-            ((RecyclerViewAdapter) mBinding.recyclerView.getAdapter()).updateData(List.of(new Item("Some value")));
-
-            try {
-                Thread.sleep(5000);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-
-            ((RecyclerViewAdapter) mBinding.recyclerView.getAdapter()).updateData(new ItemsRepository().getData());
-        }).start();
+        mViewModel.getItems().observe(getViewLifecycleOwner(), (value) -> {
+            ((RecyclerViewAdapter) mBinding.recyclerView.getAdapter()).updateData(value);
+        });
     }
 }
